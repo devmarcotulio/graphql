@@ -3,6 +3,28 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CreateUserInput {
+  email: String!
+  password: String!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Mutation {
+  create(data: CreateUserInput!): UserModel!
+}
+
 type Query {
-  create: String!
+  list: [UserModel!]!
+}
+
+type UserModel {
+  created_at: DateTime!
+  email: String!
+  id: String!
+  password: String!
+  updated_at: DateTime!
 }
