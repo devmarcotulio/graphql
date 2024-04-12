@@ -1,0 +1,22 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only src/server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "class-validator": "^0.14.1",
+    "graphql": "^15.8.0",
+    "reflect-metadata": "^0.2.2",
+    "type-graphql": "^1.1.1"
+  }
+}
