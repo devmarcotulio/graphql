@@ -1,8 +1,9 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
-import { CreateUserInput } from "../dtos/inputs/create-user";
 import { prismaClient } from "../database/prisma-client";
-import { UserModel } from "../dtos/inputs/models/user-model";
 import { hash } from "bcryptjs";
+import { UserModel } from "../dtos/inputs/models/user-model";
+import { CreateUserInput } from "../dtos/inputs/create-user";
+import { UpdateUserInput } from "../dtos/inputs/update-user";
 
 @Resolver()
 export class UsersResolver {
@@ -57,5 +58,36 @@ export class UsersResolver {
     });
 
     return `Usuário: ${deleted.id}, deletado!`
+  }
+
+  @Mutation(() => String) 
+  async update(@Arg('data') data: UpdateUserInput) {
+  
+    const { id, email, password } = data;
+    
+    const userExists = await prismaClient.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!userExists) {
+      throw new Error("Usuário não encontrado!");
+    }
+
+    if (userExists.email == email) {
+      throw new Error("O e-mail não pode ser o mesmo!")
+    }
+
+    await prismaClient.user.updateMany({
+      data: {
+        email, password
+      },
+      where: {
+        id,
+      },
+    });
+
+    return `Usuário: ${id}, alterado!`;
   }
 }

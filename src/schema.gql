@@ -16,10 +16,17 @@ scalar DateTime
 type Mutation {
   create(data: CreateUserInput!): UserModel!
   delete(id: String!): String!
+  update(data: UpdateUserInput!): String!
 }
 
 type Query {
   list: [UserModel!]!
+}
+
+input UpdateUserInput {
+  email: String!
+  id: String!
+  password: String!
 }
 
 type UserModel {
