@@ -24,7 +24,7 @@ export class UsersResolver {
     })
 
     if (emailExists) {
-      throw new Error("Email já cadastrado!")
+      throw new Error("Email já cadastrado!");
     }
 
     const hashedPassword = await hash(password, 8)
@@ -35,5 +35,27 @@ export class UsersResolver {
         password: hashedPassword
       },
     });
+  }
+
+  @Mutation(() => String)
+  async delete(@Arg('id') id: string) {
+
+    const userExists = await prismaClient.user.findUnique({
+      where: {
+        id
+      }
+    });
+
+    if (!userExists) {
+      throw new Error("Usuário não encontrado!");
+    }
+
+    const deleted = await prismaClient.user.delete({
+      where: {
+        id
+      }
+    });
+
+    return `Usuário: ${deleted.id}, deletado!`
   }
 }

@@ -15,6 +15,7 @@ scalar DateTime
 
 type Mutation {
   create(data: CreateUserInput!): UserModel!
+  delete(id: String!): String!
 }
 
 type Query {
